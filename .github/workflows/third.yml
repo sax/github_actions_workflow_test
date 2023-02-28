@@ -6,6 +6,8 @@ on:
     types: [completed]
     branches: [main]
 
+concurrency: tertiary
+
 jobs:
   first:
     name: Run step in Third workflow
