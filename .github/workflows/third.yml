@@ -1,0 +1,21 @@
+name: Third
+
+on:
+  workflow_run:
+    workflows: [Second]
+    types: [completed]
+    branches: [main]
+
+jobs:
+  first:
+    name: Run step in Third workflow
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          echo "Triggering event:"
+          echo "$GITHUB_CONTEXT" | jq
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+      - run: sleep 30
